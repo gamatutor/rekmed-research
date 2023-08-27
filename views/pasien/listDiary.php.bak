@@ -1,0 +1,40 @@
+<?php
+use app\assets\DataTableAsset;
+DataTableAsset::register($this);
+?>
+<table class="table" id="myTable">
+	<thead>
+			<td>Judul</td>
+			<td>Isi</td>
+			<td>Lampiran</td>
+			<td>Waktu</td>
+	</thead>
+	<tbody>
+		<?php foreach ($data as $key => $value): ?>
+			<tr>
+				<td><?= Html::encode($value->title) ?></td>
+				<td><?= Html::encode($value->content) ?></td>
+				<td>
+					<?php if($value->attachment==''){ echo '-'; }else{ ?>
+						<a href="<?= Html::encode($value->apiStorageUrl.$value->attachment) ?>" target="_blank">Download</a>
+					<?php } ?>
+				</td>
+				<td><?= date('d-m-Y H:i:s', strtotime($value->title)) ?></td>
+			</tr>
+		<?php endForeach; ?>
+	</tbody>
+</table>
+<?php
+$script = <<< JS
+    $('#myTable').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+JS;
+
+$this->registerJs($script);
+        
+// $this->registerJsFile('//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+?>
