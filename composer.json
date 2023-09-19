@@ -1,62 +1,88 @@
 {
-    "name": "yiisoft/yii2-app-basic",
-    "description": "Yii 2 Basic Project Template",
-    "keywords": ["yii2", "framework", "basic", "project template"],
-    "homepage": "http://www.yiiframework.com/",
-    "type": "project",
-    "license": "BSD-3-Clause",
-    "support": {
-        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
-        "forum": "http://www.yiiframework.com/forum/",
-        "wiki": "http://www.yiiframework.com/wiki/",
-        "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/yii2"
+  "name": "yiisoft/yii2-app-basic",
+  "description": "Yii 2 Basic Project Template",
+  "keywords": [
+    "yii2",
+    "framework",
+    "basic",
+    "project template"
+  ],
+  "homepage": "https://www.yiiframework.com/",
+  "type": "project",
+  "license": "BSD-3-Clause",
+  "support": {
+    "issues": "https://github.com/yiisoft/yii2/issues?state=open",
+    "forum": "https://www.yiiframework.com/forum/",
+    "wiki": "https://www.yiiframework.com/wiki/",
+    "irc": "ircs://irc.libera.chat:6697/yii",
+    "source": "https://github.com/yiisoft/yii2"
+  },
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=7.4.0",
+    "yiisoft/yii2": "~2.0.45",
+    "yiisoft/yii2-bootstrap": "^2.0",
+    "yiisoft/yii2-symfonymailer": "~2.0.3",
+    "2amigos/yii2-date-picker-widget": "^1.0",
+    "miloschuman/yii2-highcharts-widget": "v4.2.5",
+    "kartik-v/yii2-widget-select2": "^2.2",
+    "perminder-klair/yii2-dropzone": "^1.0",
+    "kartik-v/yii2-mpdf": "^1.0",
+    "yiidoc/yii2-redactor": "^2.0",
+    "amnah/yii2-user": "^5.0",
+    "kartik-v/yii2-widget-depdrop": "^1.0"
+  },
+  "require-dev": {
+    "yiisoft/yii2-debug": "~2.1.0",
+    "yiisoft/yii2-gii": "~2.2.0",
+    "yiisoft/yii2-faker": "~2.0.0",
+    "phpunit/phpunit": "~9.5.0",
+    "codeception/codeception": "^5.0.0 || ^4.0",
+    "codeception/lib-innerbrowser": "^4.0 || ^3.0 || ^1.1",
+    "codeception/module-asserts": "^3.0 || ^1.1",
+    "codeception/module-yii2": "^1.1",
+    "codeception/module-filesystem": "^3.0 || ^2.0 || ^1.1",
+    "codeception/verify": "^3.0 || ^2.2",
+    "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4"
+  },
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true
     },
-    "minimum-stability": "stable",
-    "require": {
-        "php": ">=5.4.0",
-        "yiisoft/yii2": ">=2.0.5",
-        "yiisoft/yii2-bootstrap": "*",
-        "yiisoft/yii2-swiftmailer": "~2.0.0",
-        "2amigos/yii2-date-picker-widget": "~1.0",
-        "miloschuman/yii2-highcharts-widget": "*",
-        "kartik-v/yii2-widget-select2": "*",
-        "perminder-klair/yii2-dropzone": "dev-master",
-        "kartik-v/yii2-mpdf": "*",
-        "yiidoc/yii2-redactor": "*",
-        "amnah/yii2-user": "^5.0",
-        "kartik-v/yii2-widget-depdrop": "@dev"
-    },
-    "require-dev": {
-        "yiisoft/yii2-codeception": "*",
-        "yiisoft/yii2-debug": "*",
-        "yiisoft/yii2-gii": "*",
-        "yiisoft/yii2-faker": "*"
-    },
-    "config": {
-        "process-timeout": 1800
-    },
-    "scripts": {
-        "post-create-project-cmd": [
-            "yii\\composer\\Installer::postCreateProject"
-        ]
-    },
-    "extra": {
-        "yii\\composer\\Installer::postCreateProject": {
-            "setPermission": [
-                {
-                    "runtime": "0777",
-                    "web/assets": "0777",
-                    "yii": "0755"
-                }
-            ],
-            "generateCookieValidationKey": [
-                "config/web.php"
-            ]
-        },
-        "asset-installer-paths": {
-            "npm-asset-library": "vendor/npm",
-            "bower-asset-library": "vendor/bower"
-        }
+    "process-timeout": 1800,
+    "fxp-asset": {
+      "enabled": false
     }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "yii\\composer\\Installer::postInstall"
+    ],
+    "post-create-project-cmd": [
+      "yii\\composer\\Installer::postCreateProject",
+      "yii\\composer\\Installer::postInstall"
+    ]
+  },
+  "extra": {
+    "yii\\composer\\Installer::postCreateProject": {
+      "setPermission": [
+        {
+          "runtime": "0777",
+          "web/assets": "0777",
+          "yii": "0755"
+        }
+      ]
+    },
+    "yii\\composer\\Installer::postInstall": {
+      "generateCookieValidationKey": [
+        "config/web.php"
+      ]
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
 }
