@@ -432,7 +432,7 @@ $this->title = 'Rekam Medis';
                 <i class="widget-thumb-icon bg-purple icon-magic-wand"></i>
                 <div class="widget-thumb-body">
                     <span class="widget-thumb-subtitle">Rp</span>
-                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="<?= $total_hari['total'] ?>"><?= number_format($total_hari['total'],0,'','.') ?></span>
+                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="<?= $total_hari['total'] ?>"><?= number_format($total_hari['total'],0,'','.') ?? 0 ?></span>
                 </div>
             </div>
         </div>
@@ -444,7 +444,7 @@ $this->title = 'Rekam Medis';
                 <i class="widget-thumb-icon bg-blue icon-briefcase"></i>
                 <div class="widget-thumb-body">
                     <span class="widget-thumb-subtitle">Rp</span>
-                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="<?= $total_bulan['total'] ?>"><?= number_format($total_bulan['total'],0,'','.') ?></span>
+                    <span class="widget-thumb-body-stat" data-counter="counterup" data-value="<?= $total_bulan['total'] ?>"><?= number_format($total_bulan['total'],0,'','.') ?? 0 ?></span>
                 </div>
             </div>
         </div>
