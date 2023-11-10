@@ -32,6 +32,7 @@ class MetronicAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
+        'plugins/jquery.js',
         'metronic/global/plugins/bootstrap/js/bootstrap.min.js',
         'metronic/global/plugins/js.cookie.min.js',
         'metronic/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js',

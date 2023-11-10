@@ -42,6 +42,14 @@ $config = [
             ],
         ],
         'db'           => $db,
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null,
+                    'js'         => []
+                ],
+            ],
+        ],
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
