@@ -189,7 +189,7 @@ DROP TABLE IF EXISTS `dokter`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `dokter` (
   `user_id` int NOT NULL,
-  `nama` varchar(255) NOT NULL,
+  `nama` varchar(255) DEFAULT NULL,
   `no_telp` varchar(100) DEFAULT NULL,
   `no_telp_2` varchar(100) DEFAULT NULL,
   `spesialis` int DEFAULT NULL,
