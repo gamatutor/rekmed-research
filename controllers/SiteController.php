@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Pasien;
 use Yii;
 use app\components\AccessRule;
 use yii\filters\AccessControl;
@@ -71,7 +72,61 @@ class SiteController extends Controller
 
     public function actionSearch()
     {
-        return $this->render('search');
+        $data['q'] = Yii::$app->request->get('q');
+        $client    = new \GuzzleHttp\Client();
+        //get patient by id
+
+        $res = $client->request('GET', 'http://localhost:8000/data/', [
+            'query' => [
+                'q' => $data['q'],
+                // $histori_rm = RekamMedis::findAll(['mr' => $model->mr]),
+            ],
+        ]);
+
+        $d = [];
+        foreach (json_decode($res->getBody(), true) as $key => $value) {
+            $arr['pasien']      = Pasien::findOne(['mr' => $value[0]]);
+            $arr['rekam_medis'] = RekamMedis::findOne(['rm_id' => $value[1]]);
+            $d[]                = $arr;
+        }
+
+        $data['data'] = json_decode($res->getBody(), true);
+        $data['d']    = $d;
+        return $this->render('search', $data);
+    }
+
+    public function actionSearch2()
+    {
+        $data['q']    = Yii::$app->request->get('q');
+        $connection   = Yii::$app->db;
+        $sql          = "
+            SELECT
+            p.mr, p.klinik_id, p.nama, p.tanggal_lahir, p.jk, p.alamat, p.no_telp, p.pekerjaan ,
+            rm.rm_id, rm.tekanan_darah, rm.nadi, rm.respirasi_rate, rm.suhu,
+            rm.berat_badan, rm.tinggi_badan, rm.bmi, rm.assesment, rm.plan, rm.keluhan_utama, rm.anamnesis,
+            rm.pemeriksaan_fisik, rm.hasil_penunjang, rm.deskripsi_tindakan, rm.saran_pemeriksaan, rm.alergi_obat,
+            GROUP_CONCAT(ro.nama_obat) nama_obat,
+            GROUP_CONCAT(CONCAT(rd.kode, ' - ', rd.nama_diagnosis)) diagnosis
+            FROM
+            pasien p
+            LEFT JOIN rekam_medis rm USING(mr)
+            LEFT JOIN rm_diagnosis rd USING(rm_id)
+            LEFT JOIN rm_obat ro USING(rm_id)
+            WHERE           
+                p.mr LIKE '%" . $data['q'] . "%' OR
+                p.klinik_id LIKE '%" . $data['q'] . "%' OR
+                p.nama LIKE '%" . $data['q'] . "%' OR
+                p.tanggal_lahir LIKE '%" . $data['q'] . "%' OR
+                p.jk LIKE '%" . $data['q'] . "%' OR
+                p.alamat LIKE '%" . $data['q'] . "%' OR
+                p.no_telp LIKE '%" . $data['q'] . "%' OR
+                p.pekerjaan LIKE '%" . $data['q'] . "%' 
+            GROUP BY p.mr, rm_id          
+        ";
+        $command      = $connection->createCommand($sql);
+        $d            = $command->queryAll();
+        $data['data'] = $d;
+        return $this->render('search2', $data);
     }
 
     public function actionIndex()
@@ -93,6 +148,7 @@ class SiteController extends Controller
         $farmasi      = [];
         $pembayaran   = [];
         $selesai      = [];
+
         if (Yii::$app->user->identity->role == '25') {
             $kunjungan  = Kunjungan::find()->joinWith('rekamMedis', true, 'LEFT JOIN')->joinWith('mr0')->where(['kunjungan.dokter_periksa' => Yii::$app->user->identity->id, 'DATE(jam_masuk)' => date('Y-m-d')])->andFilterWhere(['or', ['status' => 'antri'], ['status' => 'diperiksa']])->asArray()->all();
             $farmasi    = Kunjungan::find()->joinWith('mr0')->where(['kunjungan.dokter_periksa' => Yii::$app->user->identity->id, 'status' => 'antri obat'])->asArray()->all();

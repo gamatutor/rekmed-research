@@ -31,7 +31,7 @@
     "yiidoc/yii2-redactor": "^2.0",
     "amnah/yii2-user": "^5.0",
     "kartik-v/yii2-widget-depdrop": "^1.0",
-    "guzzlehttp/guzzle": "^7.8"
+    "guzzlehttp/guzzle": "^7.0"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",
