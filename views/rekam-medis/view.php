@@ -163,7 +163,7 @@ $this->registerCssFile('@web/metronic/pages/css/profile.min.css',['depends'=>'ap
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-6"></div>
                     <div class="col-md-4 col-sm-4 col-xs-6">
-                        <div class="uppercase profile-stat-title"> <?= number_format($model->bmi,2,',','') ?> </div>
+                        <div class="uppercase profile-stat-title"> <?= number_format($model->bmi ?? 0,2,',','') ?> </div>
                         <div class="uppercase profile-stat-text"> BMI </div>
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-6"></div>

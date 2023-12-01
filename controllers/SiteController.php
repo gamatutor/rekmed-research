@@ -87,6 +87,7 @@ class SiteController extends Controller
         foreach (json_decode($res->getBody(), true) as $key => $value) {
             $arr['pasien']      = Pasien::findOne(['mr' => $value[0]]);
             $arr['rekam_medis'] = RekamMedis::findOne(['rm_id' => $value[1]]);
+            $arr['dokter']      = Dokter::findOne(['user_id' => $arr['rekam_medis']['user_id'] ?? 0]);
             $d[]                = $arr;
         }
 

@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <span>Rekam medis tidak ditemukan</span>
                 <?php endif; ?><br>
                 Deskripsi:
-                <?= strlen($data[$i][2]) > 125 ? substr($data[$i][2], 0, 125) . '...' : $data[$i][2] ?>
+                <?= strlen($data[$i][2]) > 450 ? substr($data[$i][2], 0, 450) . '...' : $data[$i][2] ?>
             </li>
         <?php endforeach; ?>
     </ul>
