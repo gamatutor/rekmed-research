@@ -123,4 +123,47 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 </div>
 <?php Pjax::end(); ?></div>
-<?= Html::a("Backup Rekam Medis",['rekam-medis/unduh-all-rm'], ['target' => '_blank', 'class'=>'btn btn-success'] ) ?>
+<!--<?= Html::a("Backup Rekam Medis",['rekam-medis/unduh-all-rm'], ['target' => '_blank', 'class'=>'btn btn-success'] ) ?>-->
+
+<form action="<?= Url::to(['rekam-medis/unduh-all-rm']) ?>" class="form-inline" id="form-backup">
+  <div class="form-group">
+    <label for="">Dari</label>
+    <input type="date" name="date_start" id="date_start" value="<?= date('Y-m-d', strtotime('-2 months')) ?>" class="form-control" style="width:150px;" />
+  </div>
+  <div class="form-group">
+    <label for="">Sampai</label>
+    <input type="date" name="date_end" id="date_end" value="<?= date('Y-m-d') ?>" class="form-control" style="width:150px;" />
+  </div>
+  <button type="submit" class="btn btn-success">Backup Rekam Medis</button>
+</form>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#form-backup").submit(function (event) {
+      // Prevent form submission
+      event.preventDefault();
+
+      // Get the selected dates
+      var startDate = new Date($("#date_start").val());
+      var endDate = new Date($("#date_end").val());
+      
+      // Calculate the difference in days
+      var timeDiff = endDate.getTime() - startDate.getTime();
+      var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+      // Get tomorrow's date
+      var tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+
+      // Validate the date range
+      if (diffDays > 62) {
+        alert("Rentang tanggal tidak boleh melebihi 2 bulan");
+      } else if (endDate.getTime() === tomorrow.getTime()) {
+        alert("Tidak dapat memilih tanggal melewati hari ini");
+      } else {
+        // If validation passes, submit the form
+        this.submit();
+      }
+    });
+  });
+</script>
