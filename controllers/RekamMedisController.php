@@ -395,8 +395,11 @@ class RekamMedisController extends Controller
         ini_set('max_execution_time', 5000000);
         ini_set("pcre.backtrack_limit", "5000000");
 
+        $date = Yii::$app->request->get('date_end'); // date('Y-m-d');
+        $dateprev = Yii::$app->request->get('date_start');
+        
         //$rms = RekamMedis::find()->leftJoin('user','rekam_medis.user_id=user.id')->leftJoin('kunjungan','rekam_medis.kunjungan_id=kunjungan.kunjungan_id')->where(['user.klinik_id'=>Yii::$app->user->identity->klinik_id])->andwhere(['between','kunjungan.tanggal_periksa','2020-06-01','2020-06-30'])->all();
-        $rms = RekamMedis::find()->leftJoin('user','rekam_medis.user_id=user.id')->where(['user.klinik_id'=>Yii::$app->user->identity->klinik_id])->all();
+        $rms = RekamMedis::find()->leftJoin('user','rekam_medis.user_id=user.id')->where(['user.klinik_id'=>Yii::$app->user->identity->klinik_id])->andwhere(['between','kunjungan.tanggal_periksa',$dateprev,$date])->all();
         $klinik = Klinik::findOne(Yii::$app->user->identity->klinik_id);
         $c = [];
         foreach ($rms as $rm => $model) {
