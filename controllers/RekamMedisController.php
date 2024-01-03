@@ -399,7 +399,8 @@ class RekamMedisController extends Controller
         $rms = RekamMedis::find()->leftJoin('user','rekam_medis.user_id=user.id')->where(['user.klinik_id'=>Yii::$app->user->identity->klinik_id])->all();
         $klinik = Klinik::findOne(Yii::$app->user->identity->klinik_id);
         $c = [];
-        foreach ($rms as $id => $model) {
+        foreach ($rms as $rm => $model) {
+            $id = $model->rm_id;
             $model->decryptDulu();
             $rm_diagnosis = RmDiagnosis::find()->where(['rm_id'=>$id])->asArray()->all();
             $rm_diagnosis_banding = RmDiagnosisBanding::find()->where(['rm_id'=>$id])->asArray()->all();
